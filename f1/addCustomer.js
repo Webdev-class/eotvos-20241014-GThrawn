@@ -11,15 +11,57 @@ let customers = [
     {id:10, name:"Jonas Tungate", age:83, address:{city:"Padangulaktanding", street:"224 Manley Drive", house:49}, newsLetter: true}
 ]
 
+
 function isAddress(address) {
-    //TODO
+    if (
+        typeof address.city === 'string' &&
+        typeof address.street === 'string' &&
+        typeof address.house === 'number'
+    ) {
+        return true;
+    }
+    return false;
 }
+
 
 function isCustomer(name, age, address, newsLetter) {
-    //TODO
+    if (
+        typeof name === 'string' &&
+        typeof age === 'number' &&
+        isAddress(address) &&
+        typeof newsLetter === 'boolean'
+    ) {
+        return true;
+    }
+    return false;
 }
 
-function addCustomer(name, age, address, newsLetter) {
-    //TODO
+
+function customerExists(name) {
+    return customers.some(customer => customer.name === name);
 }
+
+
+function addCustomer(name, age, address, newsLetter) {
+    if (!isCustomer(name, age, address, newsLetter)) {
+        return false;
+    }
+    
+    
+    if (customerExists(name)) {
+        return false; 
+    }
+
+    const newCustomer = {
+        id: customers.length + 1, 
+        name: name,
+        age: age,
+        address: address,
+        newsLetter: newsLetter
+    };
+
+    customers.push(newCustomer);
+    return customers;
+}
+
 module.exports = addCustomer;
